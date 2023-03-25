@@ -1,7 +1,15 @@
 module LabelModule
+  def show_list_all_labels
+    if @labels.empty?
+      puts "\n\e[31mNo labels available!\e[0m\n"
+      puts
+    else
+      puts "\nList of Labels:\n\n"
+      list_all_labels
+    end
+  end
+
   def list_all_labels
-    puts "\nNo labels added yet" if @labels.empty?
-    puts "\nAll Labels:\n\n"
     puts "\n| Index \t| Labels \t| Color"
     puts "\n--------------------------------------------"
     @labels.each_with_index do |label, index|
@@ -19,27 +27,6 @@ module LabelModule
     label = Label.new(title, color)
     @labels << label
     puts "\e[32mLabel added successfully!\e[0m"
-  end
-
-  def book_label
-    print "\nDo you want to add label (1) or show list (2)? [Input the number]: "
-    type = gets.chomp.to_i
-    case type
-    when 1
-      add_label
-      label_id = @labels.length - 1
-    when 2
-      if @labels.empty?
-        puts "\n\e[31mNo labels available, please add a label!\e[0m\n"
-        add_label
-        label_id = @labels.length - 1
-      else
-        puts "\nSelect an author from the following list by index (not id) \n"
-        list_all_labels
-        label_id = idx_validate(@labels, gets.chomp.to_i)
-      end
-    end
-    @labels[label_id]
   end
 
   def find_label(id)
